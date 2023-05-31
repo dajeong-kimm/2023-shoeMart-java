@@ -177,8 +177,8 @@ class RegisterPage extends JFrame implements ActionListener {
             int point = 0;
 
             // 회원가입 로직을 구현합니다.
-            User.initializeDatabase(); // Create the 'users' table if it doesn't exist
-            User user = new User(name, id, password, paypwd,point);
+             // Create the 'users' table if it doesn't exist
+            User user = new User(name, id, password, paypwd, point);
             user.saveUser();
 
             JOptionPane.showMessageDialog(this, "회원가입에 성공했습니다.", "회원가입 성공", JOptionPane.INFORMATION_MESSAGE);

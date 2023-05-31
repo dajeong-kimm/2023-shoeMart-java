@@ -14,11 +14,12 @@ public class User {
     public User() {
     }
 
-    public User(String name, String id, String pwd, String paypwd) {
+    public User(String name, String id, String pwd, String paypwd, int point) {
         this.name = name;
         this.id = id;
         this.pwd = pwd;
         this.paypwd = paypwd;
+        this.point = point;
     }
 
     // 사용자 정보 조회 메서드
@@ -34,8 +35,9 @@ public class User {
                 String name = rs.getString("name");
                 String pwd = rs.getString("pwd");
                 String paypwd = rs.getString("paypwd");
+                int point = rs.getInt("point");
 
-                user = new User(name, id, pwd, paypwd);
+                user = new User(name, id, pwd, paypwd, point);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -46,12 +48,14 @@ public class User {
     // 사용자 정보 저장 메서드
     public void saveUser() {
         try (Connection conn = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
-             PreparedStatement stmt = conn.prepareStatement("INSERT INTO users (name, id, pwd, paypwd) VALUES (?, ?, ?, ?)")) {
+             PreparedStatement stmt = conn.prepareStatement("INSERT INTO users (name, id, pwd, paypwd, point) VALUES (?, ?, ?, ?, ?)")) {
 
             stmt.setString(1, name);
             stmt.setString(2, id);
             stmt.setString(3, pwd);
             stmt.setString(4, paypwd);
+            stmt.setInt(5, point);
+            
 
             stmt.executeUpdate();
         } catch (SQLException e) {

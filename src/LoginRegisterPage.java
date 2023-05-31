@@ -97,12 +97,14 @@ public class LoginRegisterPage extends JFrame implements ActionListener {
         }
     }
 
- 
+ /*
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             new LoginRegisterPage();
         });
     }
+    */
+    
     
 }
 
@@ -172,9 +174,11 @@ class RegisterPage extends JFrame implements ActionListener {
             String id = idField.getText();
             String password = new String(passwordField.getPassword());
             String paypwd = new String(paypwdField.getPassword());
+            int point = 0;
 
             // 회원가입 로직을 구현합니다.
-            User user = new User(name, id, password, paypwd);
+            User.initializeDatabase(); // Create the 'users' table if it doesn't exist
+            User user = new User(name, id, password, paypwd,point);
             user.saveUser();
 
             JOptionPane.showMessageDialog(this, "회원가입에 성공했습니다.", "회원가입 성공", JOptionPane.INFORMATION_MESSAGE);

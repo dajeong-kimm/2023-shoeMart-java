@@ -25,7 +25,7 @@ public class MyPage extends JFrame {
         
         panel.setBorder(new EmptyBorder(20, 20, 20, 20)); // 마진 추가
 
-     // 로고 이미지 추가
+        // 로고 이미지 추가
         ImageIcon logoIcon = new ImageIcon(getClass().getResource("/SHOE-MART_logo.PNG"));
         JLabel logoLabel = new JLabel(logoIcon);
         panel.add(logoLabel, BorderLayout.NORTH);
@@ -62,16 +62,19 @@ public class MyPage extends JFrame {
 
         JButton backButton = new JButton("상품 페이지로 돌아가기");
         JButton chargeButton = new JButton("포인트 충전하기");
+        JButton logoutButton = new JButton("로그아웃");
 
         bottomPanel.add(backButton);
         bottomPanel.add(chargeButton);
+        bottomPanel.add(logoutButton);
+
         backButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 dispose(); // 현재 페이지(MainPage) 종료
-                MainPage mainPage = new MainPage(user, cartItems); // MyPage 클래스로 이동
+                MainPage mainPage = new MainPage(user, cartItems); // MainPage 클래스로 이동
             }
         });
-        
+
         chargeButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // 포인트 충전 페이지 열기
@@ -79,15 +82,27 @@ public class MyPage extends JFrame {
                 try {
                     int amount = Integer.parseInt(input);
                     if (amount > 0) {
-                        user.setPoint(user.getPoint() + amount);
-                        pointValueLabel.setText(Integer.toString(user.getPoint()));
-                        JOptionPane.showMessageDialog(MyPage.this, amount + " 포인트가 충전되었습니다.");
+                        String paypwdInput = JOptionPane.showInputDialog(MyPage.this, "결제 비밀번호를 입력하세요.");
+                        if (paypwdInput.equals(user.getPaypwd())) {
+                            user.setPoint(user.getPoint() + amount);
+                            pointValueLabel.setText(Integer.toString(user.getPoint()));
+                            JOptionPane.showMessageDialog(MyPage.this, amount + " 포인트가 충전되었습니다.");
+                        } else {
+                            JOptionPane.showMessageDialog(MyPage.this, "결제 비밀번호가 일치하지 않습니다.");
+                        }
                     } else {
                         JOptionPane.showMessageDialog(MyPage.this, "잘못된 입력입니다. 양수의 정수를 입력하세요.");
                     }
                 } catch (NumberFormatException ex) {
                     JOptionPane.showMessageDialog(MyPage.this, "잘못된 입력입니다. 양수의 정수를 입력하세요.");
                 }
+            }
+        });
+
+        logoutButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                dispose(); // 현재 페이지(MyPage) 종료
+                LoginRegisterPage loginRegisterPage = new LoginRegisterPage(); // 로그인 페이지로 이동
             }
         });
 

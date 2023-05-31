@@ -21,6 +21,26 @@ public class User {
         this.paypwd = paypwd;
         this.point = point;
     }
+    
+    public static void initializeDatabase() {
+        try (Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
+             Statement statement = connection.createStatement()) {
+
+            // Create 'users' table if it doesn't exist
+            String createTableQuery = "CREATE TABLE IF NOT EXISTS users (" +
+                    "name VARCHAR(50) NOT NULL, " +
+                    "id VARCHAR(50) PRIMARY KEY, " +
+                    "pwd VARCHAR(50) NOT NULL, " +
+                    "paypwd VARCHAR(50) NOT NULL, " +
+                    "point INT NOT NULL)";
+            statement.executeUpdate(createTableQuery);
+
+            System.out.println("'users' table created successfully (if it didn't exist).");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     // 사용자 정보 조회 메서드
     public static User getUser(String id) {

@@ -2,7 +2,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
-
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
@@ -37,15 +36,19 @@ public class LoginRegisterPage extends JFrame implements ActionListener {
         inputPanel.setLayout(new GridLayout(2, 2));
 
         JLabel idLabel = new JLabel("ID:");
+        idLabel.setFont(new Font("Arial", Font.PLAIN, 30));
         inputPanel.add(idLabel);
 
         idField = new JTextField();
+        idField.setFont(new Font("Arial", Font.PLAIN, 30));
         inputPanel.add(idField);
 
         JLabel pwdLabel = new JLabel("Password:");
+        pwdLabel.setFont(new Font("Arial", Font.PLAIN, 30));
         inputPanel.add(pwdLabel);
 
         passwordField = new JPasswordField();
+        passwordField.setFont(new Font("Arial", Font.PLAIN, 30));
         inputPanel.add(passwordField);
 
         centerPanel.add(inputPanel);
@@ -54,10 +57,12 @@ public class LoginRegisterPage extends JFrame implements ActionListener {
         buttonPanel.setLayout(new FlowLayout());
 
         loginButton = new JButton("Login");
+        loginButton.setFont(new Font("Arial", Font.BOLD, 30));
         loginButton.addActionListener(this);
         buttonPanel.add(loginButton);
 
         registerButton = new JButton("Register");
+        registerButton.setFont(new Font("Arial", Font.BOLD, 30));
         registerButton.addActionListener(this);
         buttonPanel.add(registerButton);
 
@@ -67,8 +72,6 @@ public class LoginRegisterPage extends JFrame implements ActionListener {
 
         add(panel);
         setVisible(true);
-        
-        
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -84,7 +87,7 @@ public class LoginRegisterPage extends JFrame implements ActionListener {
                 dispose(); // 로그인/회원가입 페이지 닫기
 
                 // Main Page로 이동하는 로직을 추가합니다.
-                MainPage mainPage = new MainPage(user,cartItems);
+                MainPage mainPage = new MainPage(user, cartItems);
                 mainPage.setVisible(true);
             } else {
                 JOptionPane.showMessageDialog(this, "유효하지 않은 사용자 정보입니다.", "로그인 실패", JOptionPane.ERROR_MESSAGE);
@@ -98,16 +101,6 @@ public class LoginRegisterPage extends JFrame implements ActionListener {
             registerPage.setVisible(true);
         }
     }
-
- /*
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            new LoginRegisterPage();
-        });
-    }
-    */
-    
-    
 }
 
 class RegisterPage extends JFrame implements ActionListener {
@@ -130,7 +123,7 @@ class RegisterPage extends JFrame implements ActionListener {
         panel.setLayout(new BorderLayout());
         panel.setBorder(new EmptyBorder(20, 20, 20, 20)); // 마진 추가
         
-     // Set up the logo image
+        // Set up the logo image
         ImageIcon logoIcon = new ImageIcon(getClass().getResource("/SHOE-MART_logo.PNG"));
         JLabel logoLabel = new JLabel(logoIcon);
         panel.add(logoLabel, BorderLayout.NORTH);
@@ -139,47 +132,54 @@ class RegisterPage extends JFrame implements ActionListener {
         centerPanel.setLayout(new GridLayout(4, 2));
 
         JLabel nameLabel = new JLabel("Name:");
+        nameLabel.setFont(new Font("Arial", Font.PLAIN, 30));
         centerPanel.add(nameLabel);
 
         nameField = new JTextField();
+        nameField.setFont(new Font("Arial", Font.PLAIN, 30));
         centerPanel.add(nameField);
 
         JLabel idLabel = new JLabel("ID:");
+        idLabel.setFont(new Font("Arial", Font.PLAIN, 30));
         centerPanel.add(idLabel);
 
         idField = new JTextField();
+        idField.setFont(new Font("Arial", Font.PLAIN, 30));
         centerPanel.add(idField);
 
         JLabel pwdLabel = new JLabel("Password:");
+        pwdLabel.setFont(new Font("Arial", Font.PLAIN, 30));
         centerPanel.add(pwdLabel);
 
         passwordField = new JPasswordField();
+        passwordField.setFont(new Font("Arial", Font.PLAIN, 30));
         centerPanel.add(passwordField);
 
         JLabel paypwdLabel = new JLabel("Pay Password:");
+        paypwdLabel.setFont(new Font("Arial", Font.PLAIN, 30));
         centerPanel.add(paypwdLabel);
 
         paypwdField = new JPasswordField();
+        paypwdField.setFont(new Font("Arial", Font.PLAIN, 30));
         centerPanel.add(paypwdField);
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new FlowLayout());
 
         registerButton = new JButton("Register");
+        registerButton.setFont(new Font("Arial", Font.BOLD, 30));
         registerButton.addActionListener(this);
         buttonPanel.add(registerButton);
         
         backButton = new JButton("Back");
+        backButton.setFont(new Font("Arial", Font.BOLD, 30));
         backButton.addActionListener(this);
         buttonPanel.add(backButton);
-
 
         panel.add(centerPanel, BorderLayout.CENTER);
         panel.add(buttonPanel, BorderLayout.SOUTH);
 
         add(panel);
-        
-        
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -202,7 +202,7 @@ class RegisterPage extends JFrame implements ActionListener {
             // 로그인/회원가입 페이지로 이동하는 로직을 추가합니다.
             LoginRegisterPage loginRegisterPage = new LoginRegisterPage();
             loginRegisterPage.setVisible(true);
-        }else if (e.getSource() == backButton) {
+        } else if (e.getSource() == backButton) {
             // Back 버튼 클릭 시 처리
             dispose(); // 현재 페이지 닫기
 

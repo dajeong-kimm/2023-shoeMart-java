@@ -67,6 +67,8 @@ public class LoginRegisterPage extends JFrame implements ActionListener {
 
         add(panel);
         setVisible(true);
+        
+        
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -115,6 +117,7 @@ class RegisterPage extends JFrame implements ActionListener {
     private JPasswordField passwordField;
     private JPasswordField paypwdField;
     private JButton registerButton;
+    private JButton backButton;
 
     public RegisterPage() {
         setTitle("SHOE-MART Register");
@@ -126,6 +129,11 @@ class RegisterPage extends JFrame implements ActionListener {
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
         panel.setBorder(new EmptyBorder(20, 20, 20, 20)); // 마진 추가
+        
+     // Set up the logo image
+        ImageIcon logoIcon = new ImageIcon(getClass().getResource("/SHOE-MART_logo.PNG"));
+        JLabel logoLabel = new JLabel(logoIcon);
+        panel.add(logoLabel, BorderLayout.NORTH);
 
         JPanel centerPanel = new JPanel();
         centerPanel.setLayout(new GridLayout(4, 2));
@@ -160,11 +168,18 @@ class RegisterPage extends JFrame implements ActionListener {
         registerButton = new JButton("Register");
         registerButton.addActionListener(this);
         buttonPanel.add(registerButton);
+        
+        backButton = new JButton("Back");
+        backButton.addActionListener(this);
+        buttonPanel.add(backButton);
+
 
         panel.add(centerPanel, BorderLayout.CENTER);
         panel.add(buttonPanel, BorderLayout.SOUTH);
 
         add(panel);
+        
+        
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -185,6 +200,13 @@ class RegisterPage extends JFrame implements ActionListener {
             dispose(); // 회원가입 페이지 닫기
 
             // 로그인/회원가입 페이지로 이동하는 로직을 추가합니다.
+            LoginRegisterPage loginRegisterPage = new LoginRegisterPage();
+            loginRegisterPage.setVisible(true);
+        }else if (e.getSource() == backButton) {
+            // Back 버튼 클릭 시 처리
+            dispose(); // 현재 페이지 닫기
+
+            // 이전 페이지로 이동하는 로직을 추가합니다.
             LoginRegisterPage loginRegisterPage = new LoginRegisterPage();
             loginRegisterPage.setVisible(true);
         }

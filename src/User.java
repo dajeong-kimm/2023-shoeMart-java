@@ -9,7 +9,7 @@ public class User {
     private String id;
     private String pwd;
     private String paypwd;
-    private int point = 0;
+    private int point;
 
     public User() {
     }
@@ -76,16 +76,40 @@ public class User {
             stmt.setString(4, paypwd);
             stmt.setInt(5, point);
             
-
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+    
+    //포인트 충전후 저장 메서
+    public void savePoint(User user, int amount) {
+        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
+             PreparedStatement stmt = conn.prepareStatement("UPDATE users SET point = point + ? WHERE id = ?")) {
 
-    // Getter와 Setter 메서드는 필요에 따라 추가하십시오.
+            // 이전 포인트 값 가져오기
+            int currentPoint = user.getPoint();
 
-    // 예시로 몇 가지 Getter 메서드를 추가한 것입니다.
+            // 포인트 증가시키기
+            int newPoint = currentPoint + amount;
+
+            stmt.setInt(1, amount);
+            stmt.setString(2, user.getId());
+
+            stmt.executeUpdate(); // DB에 포인트 값을 업데이트
+
+            // User 객체의 포인트 값도 업데이트
+            setPoint(newPoint);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+	   
+	   
+   
+
     public String getName() {
         return name;
     }
@@ -106,7 +130,6 @@ public class User {
         return point;
     }
 
-    // 예시로 몇 가지 Setter 메서드를 추가한 것입니다.
     public void setName(String name) {
         this.name = name;
     }

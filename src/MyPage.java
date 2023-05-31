@@ -13,7 +13,7 @@ public class MyPage extends JFrame {
 
     public MyPage(User user) {
         this.user = user;
-
+        
         setTitle("My Page");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(900,600);
@@ -35,26 +35,46 @@ public class MyPage extends JFrame {
         topPanel.add(logoLabel);
         panel.add(topPanel, BorderLayout.NORTH);
 
-        // 사용자 정보
+     // 사용자 정보
+        
+        JPanel userInfoPanelWrapper = new JPanel(); // Outer panel for margins
+        userInfoPanelWrapper.setLayout(new BorderLayout());
+        userInfoPanelWrapper.setBorder(new EmptyBorder(0, 50, 0, 50)); // Set left and right margins
+
         JPanel userInfoPanel = new JPanel();
         userInfoPanel.setLayout(new GridLayout(3, 2, 10, 10));
 
+        Font userInfoFont = new Font(Font.DIALOG, Font.PLAIN, 30);
+
         JLabel nameLabel = new JLabel("이름:");
         JLabel nameValueLabel = new JLabel(user.getName());
+        nameLabel.setFont(userInfoFont);
+        nameValueLabel.setFont(userInfoFont);
         userInfoPanel.add(nameLabel);
         userInfoPanel.add(nameValueLabel);
 
         JLabel idLabel = new JLabel("아이디:");
         JLabel idValueLabel = new JLabel(user.getId());
+        idLabel.setFont(userInfoFont);
+        idValueLabel.setFont(userInfoFont);
         userInfoPanel.add(idLabel);
         userInfoPanel.add(idValueLabel);
 
         JLabel pointLabel = new JLabel("포인트:");
         JLabel pointValueLabel = new JLabel(Integer.toString(user.getPoint()));
+        pointLabel.setFont(userInfoFont);
+        pointValueLabel.setFont(userInfoFont);
         userInfoPanel.add(pointLabel);
         userInfoPanel.add(pointValueLabel);
+        
+        
 
-        panel.add(userInfoPanel, BorderLayout.CENTER);
+        userInfoPanelWrapper.add(userInfoPanel, BorderLayout.CENTER);
+        panel.add(userInfoPanelWrapper, BorderLayout.CENTER);
+        
+        
+        
+
 
         // 버튼 추가
         JPanel bottomPanel = new JPanel();
@@ -72,6 +92,7 @@ public class MyPage extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 dispose(); // 현재 페이지(MainPage) 종료
                 MainPage mainPage = new MainPage(user, cartItems); // MainPage 클래스로 이동
+                mainPage.setVisible(true);
             }
         });
 
@@ -84,7 +105,9 @@ public class MyPage extends JFrame {
                     if (amount > 0) {
                         String paypwdInput = JOptionPane.showInputDialog(MyPage.this, "결제 비밀번호를 입력하세요.");
                         if (paypwdInput.equals(user.getPaypwd())) {
-                            user.setPoint(user.getPoint() + amount);
+                        	
+                        	user.savePoint(user,amount);
+                           
                             pointValueLabel.setText(Integer.toString(user.getPoint()));
                             JOptionPane.showMessageDialog(MyPage.this, amount + " 포인트가 충전되었습니다.");
                         } else {
@@ -103,6 +126,7 @@ public class MyPage extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 dispose(); // 현재 페이지(MyPage) 종료
                 LoginRegisterPage loginRegisterPage = new LoginRegisterPage(); // 로그인 페이지로 이동
+                loginRegisterPage.setVisible(true);
             }
         });
 

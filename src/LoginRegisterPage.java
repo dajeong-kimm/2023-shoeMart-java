@@ -80,18 +80,26 @@ public class LoginRegisterPage extends JFrame implements ActionListener {
             String id = idField.getText();
             String password = new String(passwordField.getPassword());
 
-            // 사용자 인증 로직을 구현합니다.
-            User user = User.getUser(id);
-            if (user != null && user.getPwd().equals(password)) {
-                JOptionPane.showMessageDialog(this, "로그인에 성공했습니다.", "로그인 성공", JOptionPane.INFORMATION_MESSAGE);
-                dispose(); // 로그인/회원가입 페이지 닫기
+         // 사용자 인증 로직을 멀티쓰레드로 실행합니다.
+            Thread authenticationThread = new Thread(() -> {
+                User user = User.getUser(id);
+                if (user != null && user.getPwd().equals(password)) {
+                    SwingUtilities.invokeLater(() -> {
+                        JOptionPane.showMessageDialog(this, "로그인에 성공했습니다.", "로그인 성공", JOptionPane.INFORMATION_MESSAGE);
+                        dispose(); // 로그인/회원가입 페이지 닫기
 
-                // Main Page로 이동하는 로직을 추가합니다.
-                MainPage mainPage = new MainPage(user, cartItems);
-                mainPage.setVisible(true);
-            } else {
-                JOptionPane.showMessageDialog(this, "유효하지 않은 사용자 정보입니다.", "로그인 실패", JOptionPane.ERROR_MESSAGE);
-            }
+                        // Main Page로 이동하는 로직을 추가합니다.
+                        MainPage mainPage = new MainPage(user, cartItems);
+                        mainPage.setVisible(true);
+                    });
+                } else {
+                    SwingUtilities.invokeLater(() -> {
+                        JOptionPane.showMessageDialog(this, "유효하지 않은 사용자 정보입니다.", "로그인 실패", JOptionPane.ERROR_MESSAGE);
+                    });
+                }
+            });
+
+            authenticationThread.start();
         } else if (e.getSource() == registerButton) {
             // 회원가입 버튼 클릭 시 처리
             dispose(); // 로그인/회원가입 페이지 닫기
@@ -191,21 +199,32 @@ class RegisterPage extends JFrame implements ActionListener {
             String paypwd = new String(paypwdField.getPassword());
             int point = 0;
 
-            // 아이디 중복 확인 로직을 구현합니다.
-            if (User.isIdAvailable(id)) {
-                // 회원가입 로직을 구현합니다.
-                User user = new User(name, id, password, paypwd, point);
-                user.saveUser();
+         // 회원가입 로직을 멀티쓰레드로 실행합니다.
+            //회원가입 로직이 새로운 쓰레드에 캡슐화됨. 등록 레지스터 버튼을 클릭하면 이 스레드가 시작되고, 등록프로세스가 비동기적으로 실행
+            // 별도의 스레드에서 회원가입 로직을 실행하면 사용자 인터페이스가 응답성을 유지하여 회원가입 프로세스가 진행되는 동안 사용자가 다른 작업을 수행할 수 있음.
+            Thread registrationThread = new Thread(() -> {
+                // 아이디 중복 확인 로직을 구현합니다.
+                if (User.isIdAvailable(id)) {
+                    // 회원가입 로직을 구현합니다.
+                    User user = new User(name, id, password, paypwd, point);
+                    user.saveUser();
 
-                JOptionPane.showMessageDialog(this, "회원가입에 성공했습니다.", "회원가입 성공", JOptionPane.INFORMATION_MESSAGE);
-                dispose(); // 회원가입 페이지 닫기
+                    SwingUtilities.invokeLater(() -> {
+                        JOptionPane.showMessageDialog(this, "회원가입에 성공했습니다.", "회원가입 성공", JOptionPane.INFORMATION_MESSAGE);
+                        dispose(); // 회원가입 페이지 닫기
 
-                // 로그인/회원가입 페이지로 이동하는 로직을 추가합니다.
-                LoginRegisterPage loginRegisterPage = new LoginRegisterPage();
-                loginRegisterPage.setVisible(true);
-            } else {
-                JOptionPane.showMessageDialog(this, "이미 등록된 아이디입니다.", "회원가입 실패", JOptionPane.ERROR_MESSAGE);
-            }
+                        // 로그인/회원가입 페이지로 이동하는 로직을 추가합니다.
+                        LoginRegisterPage loginRegisterPage = new LoginRegisterPage();
+                        loginRegisterPage.setVisible(true);
+                    });
+                } else {
+                    SwingUtilities.invokeLater(() -> {
+                        JOptionPane.showMessageDialog(this, "이미 등록된 아이디입니다.", "회원가입 실패", JOptionPane.ERROR_MESSAGE);
+                    });
+                }
+            });
+
+            registrationThread.start();
         } else if (e.getSource() == backButton) {
             // Back 버튼 클릭 시 처리
             dispose(); // 현재 페이지 닫기

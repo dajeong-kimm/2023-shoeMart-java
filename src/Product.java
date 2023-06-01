@@ -1,10 +1,13 @@
+import java.sql.Blob;
+
 public class Product {
+
     private String pName;
     private int price;
     private int cnt;
-    private String img;
-
-    public Product(String pName, int price, int cnt, String img) {
+    private Blob img;
+    
+    public Product(String pName, int price, int cnt, Blob img) {
         this.pName = pName;
         this.price = price;
         this.cnt = cnt;
@@ -23,7 +26,7 @@ public class Product {
         return cnt;
     }
 
-    public String getImg() {
+    public Blob getImg() {
         return img;
     }
 }

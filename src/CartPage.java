@@ -90,7 +90,7 @@ public class CartPage extends JFrame {
 				JLabel nameLabel = new JLabel(product.getpName()); // Access the product from the CartItem
 				JLabel priceLabel = new JLabel(Integer.toString(product.getPrice())); // Use the getPrice() method from
 																						// CartItem
-				JLabel cntLabel = new JLabel("총 가격: " + Integer.toString(item.getQuantity()));
+				JLabel cntLabel = new JLabel("수량: " + Integer.toString(item.getQuantity()));
 				JButton cancelButton = new JButton("취소하기");
 
 				cartItemsPanel.add(nameLabel);
@@ -108,7 +108,7 @@ public class CartPage extends JFrame {
 			}
 
 			JPanel totalPanel = new JPanel();
-			totalPriceLabel = new JLabel(Integer.toString(calculateTotalPrice()));
+			totalPriceLabel = new JLabel("총 가격: "+Integer.toString(calculateTotalPrice()));
 
 			totalPanel.add(totalPriceLabel);
 			

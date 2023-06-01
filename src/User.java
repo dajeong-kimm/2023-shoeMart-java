@@ -6,7 +6,7 @@ public class User {
     private static final String DB_PASSWORD = "6545";
     
     // 이미지 파일이 위치한 절대경로
-    private static final String IMG_PATH = "C:\\Users\\daram\\eclipse-workspace\\ShoeMarket\\";
+    private static final String IMG_PATH = "src/";
 
     private String name;
     private String id;
@@ -79,14 +79,14 @@ public class User {
 				products[6] = new Product("피카츄 포켓 장화", 9900, 10, null);
 				products[7] = new Product("헬로카봇 타운 장화", 8900, 10, null);
 				
-				file[0] = "썬여성샌들젤리슈즈.png";
-				file[1] = "코트버로우로우2.png";
-				file[2] = "아딜렛22.png";
-				file[3] = "척테일러올스타클래식.png";
-				file[4] = "클래식클로그.png";
-				file[5] = "메이린여성홀스빗로퍼.png";
-				file[6] = "피카츄포켓장화.png";
-				file[7] = "헬로카봇타운장화.png";
+				file[0] = "sunwomen.png";
+				file[1] = "low2.png";
+				file[2] = "adelet.png";
+				file[3] = "converse.png";
+				file[4] = "classic.png";
+				file[5] = "marin.png";
+				file[6] = "pica.png";
+				file[7] = "hellocabot.png";
 				
 				for (int i=0; i<8; i++) {
 					String psmtStr = "INSERT INTO products values (null, ?, ?, ?, ?)";

@@ -1,12 +1,16 @@
 import java.sql.*;
+import java.io.File;
+import java.io.FileInputStream;
+
 
 public class User {
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/User";
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/shoe_mart";
     private static final String DB_USERNAME = "dajeong";
     private static final String DB_PASSWORD = "6545";
     
     // 이미지 파일이 위치한 절대경로
     private static final String IMG_PATH = "src/";
+
 
     private String name;
     private String id;
@@ -200,6 +204,24 @@ public class User {
             e.printStackTrace();
         }
     }
+    
+    public static boolean isIdAvailable(String id) {
+        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
+             PreparedStatement stmt = conn.prepareStatement("SELECT id FROM users WHERE id = ?")) {
+
+            stmt.setString(1, id);
+            ResultSet rs = stmt.executeQuery();
+
+            // ResultSet에 결과가 있다면 중복된 아이디이므로 false를 반환
+            return !rs.next();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        // 예외가 발생하면 중복 여부를 확정할 수 없으므로 기본적으로 true를 반환
+        return true;
+    }
+
 
 	   
 	   

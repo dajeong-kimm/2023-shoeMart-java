@@ -191,17 +191,21 @@ class RegisterPage extends JFrame implements ActionListener {
             String paypwd = new String(paypwdField.getPassword());
             int point = 0;
 
-            // 회원가입 로직을 구현합니다.
-             // Create the 'users' table if it doesn't exist
-            User user = new User(name, id, password, paypwd, point);
-            user.saveUser();
+            // 아이디 중복 확인 로직을 구현합니다.
+            if (User.isIdAvailable(id)) {
+                // 회원가입 로직을 구현합니다.
+                User user = new User(name, id, password, paypwd, point);
+                user.saveUser();
 
-            JOptionPane.showMessageDialog(this, "회원가입에 성공했습니다.", "회원가입 성공", JOptionPane.INFORMATION_MESSAGE);
-            dispose(); // 회원가입 페이지 닫기
+                JOptionPane.showMessageDialog(this, "회원가입에 성공했습니다.", "회원가입 성공", JOptionPane.INFORMATION_MESSAGE);
+                dispose(); // 회원가입 페이지 닫기
 
-            // 로그인/회원가입 페이지로 이동하는 로직을 추가합니다.
-            LoginRegisterPage loginRegisterPage = new LoginRegisterPage();
-            loginRegisterPage.setVisible(true);
+                // 로그인/회원가입 페이지로 이동하는 로직을 추가합니다.
+                LoginRegisterPage loginRegisterPage = new LoginRegisterPage();
+                loginRegisterPage.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(this, "이미 등록된 아이디입니다.", "회원가입 실패", JOptionPane.ERROR_MESSAGE);
+            }
         } else if (e.getSource() == backButton) {
             // Back 버튼 클릭 시 처리
             dispose(); // 현재 페이지 닫기
@@ -211,4 +215,5 @@ class RegisterPage extends JFrame implements ActionListener {
             loginRegisterPage.setVisible(true);
         }
     }
+
 }

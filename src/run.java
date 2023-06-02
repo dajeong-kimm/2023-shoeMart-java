@@ -7,7 +7,7 @@ public class run {
 	public static void main(String[] args) {
 		User.initializeDatabase();
 		SwingUtilities.invokeLater(() -> {
-            new LoginRegisterPage();
+            new StartPage();
         });
 		// TODO Auto-generated method stub
 

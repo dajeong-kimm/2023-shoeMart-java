@@ -78,17 +78,19 @@ public class MyPage extends JFrame {
         JButton backButton = new JButton("상품 페이지로 돌아가기");
         JButton chargeButton = new JButton("포인트 충전하기");
         JButton logoutButton = new JButton("로그아웃");
+        JButton contactAdminButton = new JButton("관리자에게 문의하기");
         
      // 버튼 폰트 설정
-        Font buttonFont = new Font("Arial", Font.PLAIN, 30);
+        Font buttonFont = new Font("Arial", Font.PLAIN, 20);
         backButton.setFont(buttonFont);
         chargeButton.setFont(buttonFont);
         logoutButton.setFont(buttonFont);
-
+        contactAdminButton.setFont(buttonFont);
 
         bottomPanel.add(backButton);
         bottomPanel.add(chargeButton);
         bottomPanel.add(logoutButton);
+        bottomPanel.add(contactAdminButton);
 
         backButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -127,6 +129,21 @@ public class MyPage extends JFrame {
                 dispose(); // 현재 페이지(MyPage) 종료
                 LoginRegisterPage loginRegisterPage = new LoginRegisterPage(); // 로그인 페이지로 이동
                 loginRegisterPage.setVisible(true);
+            }
+        });
+        
+     // 관리자와 채팅하기 버튼 이벤트 리스
+        contactAdminButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                dispose(); // 현재 페이지(MainPage) 종료
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        ClientGUI clientGUI = new ClientGUI();
+                        clientGUI.setVisible(true);
+                    }
+                });
+
             }
         });
 

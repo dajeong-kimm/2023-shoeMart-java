@@ -45,7 +45,7 @@ public class AdministratorPage extends JFrame {
         centerPanel.add(backButton);
         
      // 버튼 폰트 설정
-        Font buttonFont = new Font("Arial", Font.PLAIN, 30);
+        Font buttonFont = new Font("Arial", Font.PLAIN, 15);
         chatButton.setFont(buttonFont);
         addProductButton.setFont(buttonFont);
         backButton.setFont(buttonFont);
@@ -74,6 +74,8 @@ public class AdministratorPage extends JFrame {
         addProductButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // 상품 목록 추가 코드 작성
+            	ProductRegisterPage prodRegPage = new ProductRegisterPage();
+
             }
         });
         

@@ -1,6 +1,6 @@
 import java.awt.*;
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
+import javax.swing.border.*;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,36 +13,37 @@ public class MyPage extends JFrame {
 
     public MyPage(User user) {
         this.user = user;
-        
+
         setTitle("My Page");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(900,600);
+        setSize(900, 600);
         setResizable(false);
         setLocationRelativeTo(null);
 
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
-        
-        panel.setBorder(new EmptyBorder(20, 20, 20, 20)); // 마진 추가
+        panel.setBorder(new EmptyBorder(20, 20, 20, 20));
 
         // 로고 이미지 추가
         ImageIcon logoIcon = new ImageIcon(getClass().getResource("/SHOE-MART_logo.PNG"));
         JLabel logoLabel = new JLabel(logoIcon);
         panel.add(logoLabel, BorderLayout.NORTH);
-      
 
         JPanel topPanel = new JPanel();
         topPanel.add(logoLabel);
         panel.add(topPanel, BorderLayout.NORTH);
 
-     // 사용자 정보
-        
-        JPanel userInfoPanelWrapper = new JPanel(); // Outer panel for margins
+        // 사용자 정보 패널
+        JPanel userInfoPanelWrapper = new JPanel();
         userInfoPanelWrapper.setLayout(new BorderLayout());
-        userInfoPanelWrapper.setBorder(new EmptyBorder(0, 50, 0, 50)); // Set left and right margins
+        userInfoPanelWrapper.setBorder(new EmptyBorder(0, 50, 0, 50));
 
         JPanel userInfoPanel = new JPanel();
         userInfoPanel.setLayout(new GridLayout(3, 2, 10, 10));
+        userInfoPanel.setBorder(new CompoundBorder(
+                new LineBorder(Color.BLACK, 2), // 테두리 선 스타일 및 색상 설정
+                new EmptyBorder(10, 10, 10, 10) // 테두리 안쪽 여백 설정
+        ));
 
         Font userInfoFont = new Font(Font.DIALOG, Font.PLAIN, 30);
 
@@ -66,15 +67,9 @@ public class MyPage extends JFrame {
         pointValueLabel.setFont(userInfoFont);
         userInfoPanel.add(pointLabel);
         userInfoPanel.add(pointValueLabel);
-        
-        
 
         userInfoPanelWrapper.add(userInfoPanel, BorderLayout.CENTER);
         panel.add(userInfoPanelWrapper, BorderLayout.CENTER);
-        
-        
-        
-
 
         // 버튼 추가
         JPanel bottomPanel = new JPanel();
@@ -83,6 +78,13 @@ public class MyPage extends JFrame {
         JButton backButton = new JButton("상품 페이지로 돌아가기");
         JButton chargeButton = new JButton("포인트 충전하기");
         JButton logoutButton = new JButton("로그아웃");
+        
+     // 버튼 폰트 설정
+        Font buttonFont = new Font("Arial", Font.PLAIN, 30);
+        backButton.setFont(buttonFont);
+        chargeButton.setFont(buttonFont);
+        logoutButton.setFont(buttonFont);
+
 
         bottomPanel.add(backButton);
         bottomPanel.add(chargeButton);
@@ -105,9 +107,7 @@ public class MyPage extends JFrame {
                     if (amount > 0) {
                         String paypwdInput = JOptionPane.showInputDialog(MyPage.this, "결제 비밀번호를 입력하세요.");
                         if (paypwdInput.equals(user.getPaypwd())) {
-                        	
-                        	user.savePoint(user,amount);
-                           
+                            user.savePoint(user, amount);
                             pointValueLabel.setText(Integer.toString(user.getPoint()));
                             JOptionPane.showMessageDialog(MyPage.this, amount + " 포인트가 충전되었습니다.");
                         } else {

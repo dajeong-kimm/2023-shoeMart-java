@@ -1,18 +1,24 @@
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 
-public class AdministratorPage extends JFrame{
-	private static final long serialVersionUID = 1L;
+public class AdministratorPage extends JFrame {
+    private static final long serialVersionUID = 1L;
 
     public AdministratorPage() {
         setTitle("Administrator Page");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(900, 600);
+        setSize(600, 300);
         setResizable(false);
         setLocationRelativeTo(null);
 
@@ -24,14 +30,68 @@ public class AdministratorPage extends JFrame{
         ImageIcon logoIcon = new ImageIcon(getClass().getResource("/SHOE-MART_logo.PNG"));
         JLabel logoLabel = new JLabel(logoIcon);
         panel.add(logoLabel, BorderLayout.NORTH);
+
+        JPanel centerPanel = new JPanel();
+        centerPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
         
-        JPanel topPanel = new JPanel();
-        topPanel.add(logoLabel);
-        panel.add(topPanel, BorderLayout.NORTH);
+       
+        JButton chatButton = new JButton("Chat with Customer");
+        JButton addProductButton = new JButton("Add Product to List");
+        JButton backButton = new JButton("Go Back");
+
+
+        centerPanel.add(chatButton);
+        centerPanel.add(addProductButton);
+        centerPanel.add(backButton);
         
+     // 버튼 폰트 설정
+        Font buttonFont = new Font("Arial", Font.PLAIN, 30);
+        chatButton.setFont(buttonFont);
+        addProductButton.setFont(buttonFont);
+        backButton.setFont(buttonFont);
+
+        panel.add(centerPanel, BorderLayout.CENTER);
+
+        // 채팅 버튼 추가
+        
+        chatButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // 클라이언트와의 채팅 연결 코드 작성
+            	 SwingUtilities.invokeLater(new Runnable() {
+                     @Override
+                     public void run() {
+                         ServerGUI serverGUI = new ServerGUI();
+                         serverGUI.setVisible(true);
+                     }
+                 });
+             
+            }
+        });
+        
+
+        // 상품 목록 추가 버튼 추가
+        
+        addProductButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // 상품 목록 추가 코드 작성
+            }
+        });
+        
+
+        // 이전으로 돌아가기 버튼 추가
+        
+        backButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                dispose(); // 현재 창 닫기
+                StartPage startPage = new StartPage(); // StartPage 인스턴스 생성
+                startPage.setVisible(true); // StartPage 보이기
+            }
+        });
+        
+
+     
+
         add(panel);
         setVisible(true);
-	
-
-}
+    }
 }

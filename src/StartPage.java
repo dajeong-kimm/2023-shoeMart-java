@@ -26,8 +26,8 @@ public class StartPage extends JFrame {
         JPanel centerPanel = new JPanel();
         centerPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
 
-        JButton adminButton = new JButton("관리자");
-        JButton userButton = new JButton("구매자");
+        JButton adminButton = new JButton("Administrator");
+        JButton userButton = new JButton("Customer");
 
         centerPanel.add(adminButton);
         centerPanel.add(userButton);

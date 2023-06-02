@@ -66,7 +66,7 @@ public class User {
 			if (rs.getInt(1) == 0) {
 
 				String createQuery = "CREATE TABLE products (" + "pId int primary key auto_increment, "
-						+ "pName varchar(30) not null, " + "price int not null, " + "cnt int default 0, "
+						+ "pName varchar(30) not null unique, " + "price int not null, " + "cnt int default 0, "
 						+ "img longblob)";
 
 				stmt.executeUpdate(createQuery);

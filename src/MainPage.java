@@ -86,7 +86,7 @@ public class MainPage extends JFrame {
 				
 				text.add(amtField);
 				
-				amtField.setHorizontalAlignment(JTextField.CENTER);
+				text.get(key-1).setHorizontalAlignment(JTextField.CENTER);
 				text.get(key-1).addKeyListener(new KeyAdapter() {
 					public void keyPressed(KeyEvent ke) {
 						String value = amtField.getText();
@@ -127,10 +127,9 @@ public class MainPage extends JFrame {
 
 				
 				amtDecisionPanel.add(sub);
-				amtDecisionPanel.add(amtField);
+				amtDecisionPanel.add(text.get(key-1));
 				amtDecisionPanel.add(add);
 				amtDecisionPanel.setBorder(new EmptyBorder(inset));
-
 				productPanel.add(productImageLabel);
 				productPanel.add(productLabel);
 				productPanel.add(productPrice);

@@ -21,7 +21,7 @@ public class MainPage extends JFrame {
 
         setTitle("SHOE-MART");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(900,600);
+        setSize(1200,600);
         setResizable(false);
         setLocationRelativeTo(null);
         
@@ -33,10 +33,14 @@ public class MainPage extends JFrame {
         JLabel logoLabel = new JLabel(logoIcon);
         panel.add(logoLabel, BorderLayout.NORTH);
       
+        
+        int prodAmount = prods.products.size();
+        
+        int row = prodAmount % 2 == 0? (int)prodAmount/2 : (int)prodAmount/2 + 1;
 
         JPanel centerPanel = new JPanel();
-        centerPanel.setLayout(new GridLayout(4, 2, 10, 10)); // 4행 2열의 그리드 레이아웃 사용
-        
+        centerPanel.setLayout(new GridLayout(row, 2, 10, 10)); // 4행 2열의 그리드 레이아웃 사용
+        JScrollPane scrollPane = new JScrollPane(centerPanel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
     	
     	Set keyset = prods.products.keySet();
     	Iterator<Integer> iter = keyset.iterator();
@@ -72,7 +76,7 @@ public class MainPage extends JFrame {
         } 
         
       
-        panel.add(centerPanel, BorderLayout.CENTER);
+        panel.add(scrollPane, BorderLayout.CENTER);
         
         JPanel bottomPanel = new JPanel();
         bottomPanel.setLayout(new FlowLayout(FlowLayout.CENTER));

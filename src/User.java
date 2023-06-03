@@ -42,7 +42,6 @@ public class User {
                     "point INT NOT NULL)";
             statement.executeUpdate(createTableQuery);
 
-            System.out.println("'users' table created successfully (if it didn't exist).");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -129,9 +128,7 @@ public class User {
 					"amount int default 0, "+
 					"foreign key(user_id) references users(id), "+
 					"foreign key(product_id) references products(pId))";
-			
-			System.out.println(createQuery);
-			
+						
 			stmt.executeUpdate(createQuery);
 			
 			stmt.close(); conn.close();

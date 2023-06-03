@@ -19,7 +19,6 @@ public class ServerGUI extends JFrame {
 
     public ServerGUI() {
         setTitle("Chat with Customer");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(600, 400);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());

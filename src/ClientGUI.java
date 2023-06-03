@@ -17,7 +17,6 @@ public class ClientGUI extends JFrame {
 
     public ClientGUI() {
         setTitle("Chat with Administrator");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(600, 400);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());

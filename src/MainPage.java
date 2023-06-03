@@ -113,7 +113,7 @@ public class MainPage extends JFrame {
 		checkoutButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose(); // 현재 페이지(MainPage) 종료
-				PayPage payPage = new PayPage(user, CartItem.getCartItems()); // PayPage 클래스로 이동
+				PayPage payPage = new PayPage(user, cartItems); // PayPage 클래스로 이동
 			}
 		});
 

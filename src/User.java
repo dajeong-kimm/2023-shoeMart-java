@@ -205,7 +205,7 @@ public class User {
         }
     }
     
-    // 포인트 삭감 메소드
+    // 포인트 삭감 메소드 
     public void reducePoint(User user, int amount) {
         try (Connection conn = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
              PreparedStatement stmt = conn.prepareStatement("UPDATE users SET point = point + ? WHERE id = ?")) {
@@ -213,7 +213,7 @@ public class User {
             // 이전 포인트 값 가져오기
             int currentPoint = user.getPoint();
 
-            // 포인트 증가시키기
+            // 포인트 감소시키기
             int newPoint = currentPoint - amount;
 
             stmt.setInt(1, amount);

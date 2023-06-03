@@ -82,7 +82,7 @@ public class MainPage extends JFrame {
 				JPanel amtDecisionPanel = new JPanel();
 				amtDecisionPanel.setLayout(new GridLayout(1, 3));
 				JButton sub = new JButton("<");
-				amtField = new JTextField("0");
+				amtField = new JTextField("1");
 				
 				text.add(amtField);
 				
@@ -122,6 +122,7 @@ public class MainPage extends JFrame {
 				addCart.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						addToCart(key.intValue(), Integer.parseInt(text.get(key-1).getText()));
+						text.get(key-1).setText("1");
 					}
 				});
 

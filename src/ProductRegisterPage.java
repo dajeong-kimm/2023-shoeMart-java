@@ -99,7 +99,7 @@ public class ProductRegisterPage extends JFrame{
 				path = j.getSelectedFile().getName();
 				
 				try {
-					File file = new File(path);
+					File file = new File(j.getSelectedFile().getAbsolutePath());
 					fis = new FileInputStream(file);
 					imgSize = file.length();
 				} catch (Exception e) {

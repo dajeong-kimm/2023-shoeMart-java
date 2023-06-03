@@ -2,10 +2,15 @@ import java.awt.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -14,15 +19,18 @@ public class MainPage extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private User user;
 	private ProductList prods = new ProductList();
+	private JTextField amtField;
 
 	public MainPage(User user, List<CartItem> cartItems) {
 		this.user = user;
 
 		setTitle("SHOE-MART");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(1200, 600);
+		setSize(1500, 800);
 		setResizable(false);
 		setLocationRelativeTo(null);
+		
+		ArrayList<JTextField> text = new ArrayList<>();
 
 		JPanel panel = new JPanel();
 		panel.setLayout(new BorderLayout());
@@ -35,6 +43,8 @@ public class MainPage extends JFrame {
 		int prodAmount = prods.products.size();
 
 		int row = prodAmount % 2 == 0 ? (int) prodAmount / 2 : (int) prodAmount / 2 + 1;
+		
+		Insets inset = new Insets(70, 5, 70, 5);
 
 		JPanel centerPanel = new JPanel();
 		centerPanel.setLayout(new GridLayout(row, 2, 10, 10)); // 4행 2열의 그리드 레이아웃 사용
@@ -47,8 +57,13 @@ public class MainPage extends JFrame {
 		while (iter.hasNext()) {
 			Integer key = iter.next();
 			Product prod = prods.products.get(key);
+			JPanel productPanel = new JPanel();
+			productPanel.setLayout(new GridLayout(1, 5));
 			JLabel productLabel = new JLabel(prod.getpName());
+			productLabel.setHorizontalAlignment(JLabel.CENTER);
 			JLabel productPrice = new JLabel(Integer.toString(prod.getPrice()));
+			productPrice.setHorizontalAlignment(JLabel.CENTER);
+
 			try {
 				InputStream is = prod.getImg().getBinaryStream(1, prod.getImg().length());
 				BufferedImage image = ImageIO.read(is);
@@ -57,18 +72,72 @@ public class MainPage extends JFrame {
 				Image changeImg = img.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
 				ImageIcon changed = new ImageIcon(changeImg);
 				JLabel productImageLabel = new JLabel(changed);
+				
+				JPanel buttonPanel = new JPanel();
+				buttonPanel.setLayout(new GridLayout(1, 1));
+				buttonPanel.setBorder(new EmptyBorder(inset));
 				JButton addCart = new JButton("추가");
-				addCart.setSize(50, 50);
+				buttonPanel.add(addCart);
+								
+				JPanel amtDecisionPanel = new JPanel();
+				amtDecisionPanel.setLayout(new GridLayout(1, 3));
+				JButton sub = new JButton("<");
+				amtField = new JTextField("0");
+				
+				text.add(amtField);
+				
+				amtField.setHorizontalAlignment(JTextField.CENTER);
+				text.get(key-1).addKeyListener(new KeyAdapter() {
+					public void keyPressed(KeyEvent ke) {
+						String value = amtField.getText();
+						
+						int l = value.length();
+						if ((ke.getKeyChar() >= '0' && ke.getKeyChar() <= '9') || ke.getKeyChar() == 8) {
+							text.get(key-1).setEditable(true);
+						} else {
+							text.get(key-1).setEditable(false);
+							text.get(key-1).setBackground(Color.white);
+						}
+					}
+				});
+				JButton add = new JButton(">");
+				
+				sub.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						int num = Integer.parseInt(text.get(key-1).getText());
+						
+						if (num > 0)
+							text.get(key-1).setText(Integer.toString(num-1));
+					}
+				});
+				
+				add.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						int num = Integer.parseInt(text.get(key-1).getText());
+						
+						text.get(key-1).setText(Integer.toString(num+1));
+					}
+				});
+				
 				addCart.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						addToCart(key.intValue());
+						addToCart(key.intValue(), Integer.parseInt(text.get(key-1).getText()));
 					}
 				});
 
-				centerPanel.add(productImageLabel);
-				centerPanel.add(productLabel);
-				centerPanel.add(productPrice);
-				centerPanel.add(addCart);
+				
+				amtDecisionPanel.add(sub);
+				amtDecisionPanel.add(amtField);
+				amtDecisionPanel.add(add);
+				amtDecisionPanel.setBorder(new EmptyBorder(inset));
+
+				productPanel.add(productImageLabel);
+				productPanel.add(productLabel);
+				productPanel.add(productPrice);
+				productPanel.add(amtDecisionPanel);
+				productPanel.add(buttonPanel);
+				
+				centerPanel.add(productPanel);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

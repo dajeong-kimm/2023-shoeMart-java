@@ -189,10 +189,10 @@ public class MainPage extends JFrame {
 	}
 
 	// 장바구니에 상품을 추가하는 메서드
-	private void addToCart(int pId) {
+	private void addToCart(int pId, int amt) {
 		// 장바구니에 상품 추가하는 로직을 구현
 		// 예시로 CartItem 클래스의 addToCart 메서드를 호출하는 것으로 가정합니다.
-		CartItem item = new CartItem(this.user, pId, 1);
+		CartItem item = new CartItem(this.user, pId, amt);
 		item.addCart();
 		JOptionPane.showMessageDialog(MainPage.this, "상품이 장바구니에 추가되었습니다.");
 	}

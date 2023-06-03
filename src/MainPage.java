@@ -89,7 +89,7 @@ public class MainPage extends JFrame {
 				text.get(key-1).setHorizontalAlignment(JTextField.CENTER);
 				text.get(key-1).addKeyListener(new KeyAdapter() {
 					public void keyPressed(KeyEvent ke) {
-						String value = amtField.getText();
+						String value = text.get(key-1).getText();
 						
 						int l = value.length();
 						if ((ke.getKeyChar() >= '0' && ke.getKeyChar() <= '9') || ke.getKeyChar() == 8) {
@@ -191,6 +191,11 @@ public class MainPage extends JFrame {
 	private void addToCart(int pId, int amt) {
 		// 장바구니에 상품 추가하는 로직을 구현
 		// 예시로 CartItem 클래스의 addToCart 메서드를 호출하는 것으로 가정합니다.
+		
+		if (amt == 0) {
+			JOptionPane.showMessageDialog(MainPage.this, "수량을 추가해주세요.");
+			return;
+		}
 		CartItem item = new CartItem(this.user, pId, amt);
 		item.addCart();
 		JOptionPane.showMessageDialog(MainPage.this, "상품이 장바구니에 추가되었습니다.");

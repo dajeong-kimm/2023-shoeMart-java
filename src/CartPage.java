@@ -83,7 +83,13 @@ public class CartPage extends JFrame {
 		else {
 
 			JPanel cartItemsPanel = new JPanel();
-			cartItemsPanel.setLayout(new GridLayout(cartItems.size(), 3, 10, 10));
+			JScrollPane scrollPane = new JScrollPane(cartItemsPanel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+					JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+			cartItemsPanel.setLayout(new GridLayout(cartItems.size(), 4, 30, 30));
+
+			int num = cartItems.size();
+
+			Insets inset = new Insets((int) 240 / (num * num), 40, (int) 240 / (num * num), 40);
 
 			for (CartItem item : cartItems) { // Update the loop variable type
 				Product product = prod.get(item.getPId());
@@ -91,12 +97,24 @@ public class CartPage extends JFrame {
 				JLabel priceLabel = new JLabel(Integer.toString(product.getPrice())); // Use the getPrice() method from
 																						// CartItem
 				JLabel cntLabel = new JLabel("수량: " + Integer.toString(item.getQuantity()));
+
+				nameLabel.setBorder(new EmptyBorder(5, 15, 5, 15));
+				nameLabel.setHorizontalAlignment(JLabel.CENTER);
+				priceLabel.setBorder(new EmptyBorder(5, 30, 5, 30));
+				priceLabel.setHorizontalAlignment(JLabel.CENTER);
+				cntLabel.setBorder(new EmptyBorder(5, 30, 5, 30));
+				cntLabel.setHorizontalAlignment(JLabel.CENTER);
+
+				JPanel buttonPanel = new JPanel();
+				buttonPanel.setLayout(new GridLayout(1, 1));
+				buttonPanel.setBorder(new EmptyBorder(inset));
 				JButton cancelButton = new JButton("취소하기");
+				buttonPanel.add(cancelButton);
 
 				cartItemsPanel.add(nameLabel);
 				cartItemsPanel.add(priceLabel);
 				cartItemsPanel.add(cntLabel);
-				cartItemsPanel.add(cancelButton);
+				cartItemsPanel.add(buttonPanel);
 
 				cancelButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
@@ -108,12 +126,11 @@ public class CartPage extends JFrame {
 			}
 
 			JPanel totalPanel = new JPanel();
-			totalPriceLabel = new JLabel("총 가격: "+Integer.toString(calculateTotalPrice()));
+			totalPriceLabel = new JLabel("총 가격: " + Integer.toString(calculateTotalPrice()));
 
 			totalPanel.add(totalPriceLabel);
-			
 
-			panel.add(cartItemsPanel, BorderLayout.CENTER);
+			panel.add(scrollPane, BorderLayout.CENTER);
 			panel.add(totalPanel, BorderLayout.NORTH);
 			
 		}

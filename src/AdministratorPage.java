@@ -36,7 +36,7 @@ public class AdministratorPage extends JFrame {
         
        
         JButton chatButton = new JButton("Chat with Customer");
-        JButton addProductButton = new JButton("Add Product to List");
+        JButton addProductButton = new JButton("Manage Product");
         JButton backButton = new JButton("Go Back");
 
 
@@ -74,8 +74,8 @@ public class AdministratorPage extends JFrame {
         addProductButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // 상품 목록 추가 코드 작성
-            	ProductRegisterPage prodRegPage = new ProductRegisterPage();
-
+            	dispose();
+            	ProductManage prodManPage = new ProductManage();
             }
         });
         

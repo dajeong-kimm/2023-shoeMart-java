@@ -135,7 +135,6 @@ public class MyPage extends JFrame {
      // 관리자와 채팅하기 버튼 이벤트 리스
         contactAdminButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                dispose(); // 현재 페이지(MainPage) 종료
                 SwingUtilities.invokeLater(new Runnable() {
                     @Override
                     public void run() {

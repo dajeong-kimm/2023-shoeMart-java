@@ -42,8 +42,8 @@ public class ProductManage extends JFrame{
 		
 		JPanel bottom = new JPanel();
 		bottom.setLayout(new FlowLayout());
-		JButton back = new JButton("Administrator Page");
-		JButton manage = new JButton("Add Product");
+		JButton back = new JButton("Administrator Page"); // 관리자 페이지 로드
+		JButton manage = new JButton("Add Product"); // 제품 추가 페이지 로드
 		
 		bottom.add(back);
 		bottom.add(manage);
@@ -66,7 +66,7 @@ public class ProductManage extends JFrame{
 		setVisible(true);
 	}
 	
-	private ImageIcon loadImg(Blob blob) {
+	private ImageIcon loadImg(Blob blob) { // Blob 데이터를 ImageIcon 형식으로 변환
 		try {
 			InputStream is = blob.getBinaryStream(1, blob.length());
 			BufferedImage img = ImageIO.read(is);
@@ -83,7 +83,7 @@ public class ProductManage extends JFrame{
 		}
 	}
 	
-	private JPanel cartList() {
+	private JPanel cartList() { // 제품 리스트가 표시되는 패널 반환
 		JPanel center = new JPanel();
 		center.setLayout(new GridLayout(0, 1));
 		text = new ArrayList<>();
@@ -113,14 +113,17 @@ public class ProductManage extends JFrame{
 				int stock = rs.getInt(4);
 				Blob img = rs.getBlob(5);
 				
+				//제품 이름 레이블
 				JLabel name = new JLabel(pName);
 				name.setHorizontalAlignment(JLabel.CENTER);
 				list.add(name);
 				
+				//제품 이미지 레이블
 				JLabel image = new JLabel(loadImg(img));
 				list.add(image);
 				imglabel.add(image);
 				
+				//이미지 변경 버튼
 				JPanel btpanel = new JPanel();
 				btpanel.setLayout(new GridLayout(1, 1));
 				btpanel.setBorder(new EmptyBorder(50, 0, 50, 0));
@@ -160,10 +163,12 @@ public class ProductManage extends JFrame{
 				btpanel.add(change);
 				list.add(btpanel);
 				
+				//가격 표시 레이블
 				JLabel pr = new JLabel(Integer.toString(price));
 				pr.setHorizontalAlignment(JLabel.CENTER);
 				list.add(pr);
 				
+				//제품 재고 변경 시 수량 입력 텍스트필드
 				JPanel s = new JPanel();
 				s.setLayout(new GridLayout(1, 1));
 				s.setBorder(new EmptyBorder(20, 0, 20, 0));
@@ -172,6 +177,7 @@ public class ProductManage extends JFrame{
 				st.setBorder(new LineBorder(Color.black));
 				text.add(st);
 				
+				//텍스트 필드에 숫자와 백스페이스만 입력 가능하게 설정
 				text.get(key-1).addKeyListener(new KeyAdapter() {
 					public void keyPressed(KeyEvent ke) {						
 						if ((ke.getKeyChar() >= '0' && ke.getKeyChar() <= '9') || ke.getKeyChar() == 8)
@@ -186,6 +192,7 @@ public class ProductManage extends JFrame{
 				s.add(st);
 				list.add(s);
 				
+				//제품 재고 변경 버튼과 삭제 버튼
 				JPanel bt = new JPanel();
 				bt.setBorder(new EmptyBorder(10, 0, 10, 0));
 				bt.setLayout(new GridLayout(0, 1, 10, 10));
@@ -210,6 +217,7 @@ public class ProductManage extends JFrame{
 					}
 				});
 				
+				//제품 삭제 시 패널 revalid 후 repaint로 삭제된 정보 반영
 				deleteProduct.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent a) {
 						try {

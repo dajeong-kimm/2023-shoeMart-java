@@ -45,7 +45,7 @@ public class AdministratorPage extends JFrame {
         centerPanel.add(backButton);
         
      // 버튼 폰트 설정
-        Font buttonFont = new Font("Arial", Font.PLAIN, 15);
+        Font buttonFont = new Font(Font.DIALOG, Font.PLAIN, 15);
         chatButton.setFont(buttonFont);
         addProductButton.setFont(buttonFont);
         backButton.setFont(buttonFont);

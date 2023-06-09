@@ -11,6 +11,8 @@ public class LoginRegisterPage extends JFrame implements ActionListener {
 	private JPasswordField passwordField;
 	private JButton loginButton;
 	private JButton registerButton;
+	private JButton backButton;
+	
 	private List<CartItem> cartItems;
 
 	public LoginRegisterPage() {
@@ -65,10 +67,23 @@ public class LoginRegisterPage extends JFrame implements ActionListener {
 		registerButton.setFont(new Font(Font.DIALOG, Font.BOLD, 30));
 		registerButton.addActionListener(this);
 		buttonPanel.add(registerButton);
+		
+		JButton backButton = new JButton("Back");
+        backButton.setFont(new Font(Font.DIALOG, Font.BOLD, 30));
+        backButton.addActionListener(this);
+        buttonPanel.add(backButton);
 
 		centerPanel.add(buttonPanel);
 
 		panel.add(centerPanel, BorderLayout.CENTER);
+		
+		backButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                dispose(); // 현재 창 닫기
+                StartPage startPage = new StartPage(); // StartPage 인스턴스 생성
+                startPage.setVisible(true); // StartPage 보이기
+            }
+        });
 
 		add(panel);
 		setVisible(true);
@@ -107,8 +122,9 @@ public class LoginRegisterPage extends JFrame implements ActionListener {
 			// 회원가입 페이지로 이동하는 로직을 추가합니다.
 			RegisterPage registerPage = new RegisterPage();
 			registerPage.setVisible(true);
-		}
+		
 	}
+}
 }
 
 class RegisterPage extends JFrame implements ActionListener {

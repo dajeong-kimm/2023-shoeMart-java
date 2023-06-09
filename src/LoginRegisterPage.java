@@ -195,7 +195,7 @@ class RegisterPage extends JFrame implements ActionListener {
 		registerButton.addActionListener(this);
 		buttonPanel.add(registerButton);
 
-		backButton = new JButton("Back");
+		backButton = new JButton("이전 페이지");
 		backButton.setFont(new Font(Font.DIALOG, Font.BOLD, 30));
 		backButton.addActionListener(this);
 		buttonPanel.add(backButton);

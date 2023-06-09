@@ -42,8 +42,8 @@ public class ProductManage extends JFrame{
 		
 		JPanel bottom = new JPanel();
 		bottom.setLayout(new FlowLayout());
-		JButton back = new JButton("Administrator Page"); // 관리자 페이지 로드
-		JButton manage = new JButton("Add Product"); // 제품 추가 페이지 로드
+		JButton back = new JButton("관리자 페이지"); // 관리자 페이지 로드
+		JButton manage = new JButton("제품 추가"); // 제품 추가 페이지 로드
 		
 		bottom.add(back);
 		bottom.add(manage);
@@ -127,7 +127,7 @@ public class ProductManage extends JFrame{
 				JPanel btpanel = new JPanel();
 				btpanel.setLayout(new GridLayout(1, 1));
 				btpanel.setBorder(new EmptyBorder(50, 0, 50, 0));
-				JButton change = new JButton("change");
+				JButton change = new JButton("변경");
 				change.setBorder(new EmptyBorder(20, 0, 20, 0));
 				change.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent a) {
@@ -196,8 +196,8 @@ public class ProductManage extends JFrame{
 				JPanel bt = new JPanel();
 				bt.setBorder(new EmptyBorder(10, 0, 10, 0));
 				bt.setLayout(new GridLayout(0, 1, 10, 10));
-				JButton stockChange = new JButton("input");
-				JButton deleteProduct = new JButton("delete");
+				JButton stockChange = new JButton("재고 수정");
+				JButton deleteProduct = new JButton("제품 삭제");
 				
 				stockChange.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {

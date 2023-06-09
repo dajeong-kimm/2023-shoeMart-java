@@ -33,7 +33,7 @@ public class StartPage extends JFrame {
         centerPanel.add(userButton);
         
      // 버튼 폰트 설정
-        Font buttonFont = new Font("Arial", Font.PLAIN, 30);
+        Font buttonFont = new Font(Font.DIALOG, Font.PLAIN, 30);
         adminButton.setFont(buttonFont);
         userButton.setFont(buttonFont);
 

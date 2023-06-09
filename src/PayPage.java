@@ -15,9 +15,9 @@ public class PayPage extends JFrame {
     private List<CartItem> cartItems = new ArrayList();
     private int totalPrice;
 
-    private static final String DB_URL = "jdbc:mysql://127.0.0.1:3306/shoe_martt";
-    private static final String DB_USERNAME = "root";
-    private static final String DB_PASSWORD = "haeun";
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/shoe_mart";
+    private static final String DB_USERNAME = "dajeong";
+    private static final String DB_PASSWORD = "6545";
 
     public PayPage(User user, List<CartItem> cartItems) {
         this.user = user;
@@ -143,10 +143,24 @@ public class PayPage extends JFrame {
 
             Statement stmt = conn.createStatement();
             Statement stmt2 = conn.createStatement();
+            
+            boolean canProceed = true;
 
             for (CartItem item : cartItems) {
                 int pId = item.getPId();
                 int quantity = item.getQuantity();
+                
+             // Check if inventory is greater than 0
+                String inventoryCheckSql = "SELECT cnt FROM products WHERE pId=" + pId;
+                ResultSet inventoryCheckRs = stmt.executeQuery(inventoryCheckSql);
+                inventoryCheckRs.next();
+                int inventory = inventoryCheckRs.getInt("cnt");
+                inventoryCheckRs.close();
+
+                if (inventory < quantity) {
+                    canProceed = false;
+                    break; // Stop processing further items
+                }
 
                 String sql = "UPDATE products SET cnt = cnt - " + quantity + " WHERE pId = " + pId;
                 stmt.executeUpdate(sql);
@@ -158,8 +172,24 @@ public class PayPage extends JFrame {
             stmt2.close();
             stmt.close();
             conn.close();
+            
+            if (canProceed) {
+                if (user.getPoint() >= totalPrice) { // Check if user's points are higher than the total price
+                    user.reducePoint(user, totalPrice);
+                    JOptionPane.showMessageDialog(PayPage.this, "결제가 완료되었습니다.");
 
-            JOptionPane.showMessageDialog(PayPage.this, "결제가 완료되었습니다.");
+                    // Clear cartItems list
+                    cartItems.clear();
+
+                    dispose();
+                    MainPage mainPage = new MainPage(user, cartItems); // MainPage 클래스로 이동
+                    mainPage.setVisible(true);
+                } else {
+                    JOptionPane.showMessageDialog(PayPage.this, "포인트가 부족하여 결제할 수 없습니다.");
+                }
+            } else {
+                JOptionPane.showMessageDialog(PayPage.this, "상품의 재고가 부족하여 결제할 수 없습니다.");
+            }
 
             // Clear cartItems list
             cartItems.clear();

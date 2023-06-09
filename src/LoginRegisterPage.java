@@ -37,7 +37,7 @@ public class LoginRegisterPage extends JFrame implements ActionListener {
 		JPanel inputPanel = new JPanel();
 		inputPanel.setLayout(new GridLayout(2, 2));
 
-		JLabel idLabel = new JLabel("ID:");
+		JLabel idLabel = new JLabel("ID :");
 		idLabel.setFont(new Font(Font.DIALOG, Font.PLAIN, 30));
 		inputPanel.add(idLabel);
 
@@ -45,7 +45,7 @@ public class LoginRegisterPage extends JFrame implements ActionListener {
 		idField.setFont(new Font(Font.DIALOG, Font.PLAIN, 30));
 		inputPanel.add(idField);
 
-		JLabel pwdLabel = new JLabel("Password:");
+		JLabel pwdLabel = new JLabel("비밀번호 :");
 		pwdLabel.setFont(new Font(Font.DIALOG, Font.PLAIN, 30));
 		inputPanel.add(pwdLabel);
 
@@ -58,17 +58,17 @@ public class LoginRegisterPage extends JFrame implements ActionListener {
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setLayout(new FlowLayout());
 
-		loginButton = new JButton("Login");
+		loginButton = new JButton("로그인");
 		loginButton.setFont(new Font(Font.DIALOG, Font.BOLD, 30));
 		loginButton.addActionListener(this);
 		buttonPanel.add(loginButton);
 
-		registerButton = new JButton("Register");
+		registerButton = new JButton("회원가입");
 		registerButton.setFont(new Font(Font.DIALOG, Font.BOLD, 30));
 		registerButton.addActionListener(this);
 		buttonPanel.add(registerButton);
 		
-		JButton backButton = new JButton("Back");
+		JButton backButton = new JButton("이전 페이지");
         backButton.setFont(new Font(Font.DIALOG, Font.BOLD, 30));
         backButton.addActionListener(this);
         buttonPanel.add(backButton);
@@ -155,7 +155,7 @@ class RegisterPage extends JFrame implements ActionListener {
 		JPanel centerPanel = new JPanel();
 		centerPanel.setLayout(new GridLayout(4, 2));
 
-		JLabel nameLabel = new JLabel("Name:");
+		JLabel nameLabel = new JLabel("Name :");
 		nameLabel.setFont(new Font(Font.DIALOG, Font.PLAIN, 30));
 		centerPanel.add(nameLabel);
 
@@ -163,7 +163,7 @@ class RegisterPage extends JFrame implements ActionListener {
 		nameField.setFont(new Font(Font.DIALOG, Font.PLAIN, 30));
 		centerPanel.add(nameField);
 
-		JLabel idLabel = new JLabel("ID:");
+		JLabel idLabel = new JLabel("ID :");
 		idLabel.setFont(new Font(Font.DIALOG, Font.PLAIN, 30));
 		centerPanel.add(idLabel);
 
@@ -171,7 +171,7 @@ class RegisterPage extends JFrame implements ActionListener {
 		idField.setFont(new Font(Font.DIALOG, Font.PLAIN, 30));
 		centerPanel.add(idField);
 
-		JLabel pwdLabel = new JLabel("Password:");
+		JLabel pwdLabel = new JLabel("비밀번호 :");
 		pwdLabel.setFont(new Font(Font.DIALOG, Font.PLAIN, 30));
 		centerPanel.add(pwdLabel);
 
@@ -179,7 +179,7 @@ class RegisterPage extends JFrame implements ActionListener {
 		passwordField.setFont(new Font(Font.DIALOG, Font.PLAIN, 30));
 		centerPanel.add(passwordField);
 
-		JLabel paypwdLabel = new JLabel("Pay Password:");
+		JLabel paypwdLabel = new JLabel("결제 비밀번호 :");
 		paypwdLabel.setFont(new Font(Font.DIALOG, Font.PLAIN, 30));
 		centerPanel.add(paypwdLabel);
 
@@ -190,7 +190,7 @@ class RegisterPage extends JFrame implements ActionListener {
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setLayout(new FlowLayout());
 
-		registerButton = new JButton("Register");
+		registerButton = new JButton("회원가입");
 		registerButton.setFont(new Font(Font.DIALOG, Font.BOLD, 30));
 		registerButton.addActionListener(this);
 		buttonPanel.add(registerButton);

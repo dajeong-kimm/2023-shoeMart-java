@@ -15,14 +15,15 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ProductManage extends JFrame{
     private static final String DB_URL = "jdbc:mysql://localhost:3306/shoe_mart";
     private static final String DB_USERNAME = "root";
     private static final String DB_PASSWORD = "!!dltnals!!6280";
     
-    ArrayList<JTextField> text;
-    ArrayList<JLabel> imglabel;
+    HashMap<Integer, JTextField> text;
+    HashMap<Integer, JLabel> imglabel;
     private JPanel panel;
     private JScrollPane scroll;
     
@@ -42,8 +43,8 @@ public class ProductManage extends JFrame{
 		
 		JPanel bottom = new JPanel();
 		bottom.setLayout(new FlowLayout());
-		JButton back = new JButton("관리자 페이지"); // 관리자 페이지 로드
-		JButton manage = new JButton("제품 추가"); // 제품 추가 페이지 로드
+		JButton back = new JButton("관리자 페이지");
+		JButton manage = new JButton("상품 추가");
 		
 		bottom.add(back);
 		bottom.add(manage);
@@ -66,7 +67,7 @@ public class ProductManage extends JFrame{
 		setVisible(true);
 	}
 	
-	private ImageIcon loadImg(Blob blob) { // Blob 데이터를 ImageIcon 형식으로 변환
+	private ImageIcon loadImg(Blob blob) {
 		try {
 			InputStream is = blob.getBinaryStream(1, blob.length());
 			BufferedImage img = ImageIO.read(is);
@@ -83,11 +84,11 @@ public class ProductManage extends JFrame{
 		}
 	}
 	
-	private JPanel cartList() { // 제품 리스트가 표시되는 패널 반환
+	private JPanel cartList() {
 		JPanel center = new JPanel();
 		center.setLayout(new GridLayout(0, 1));
-		text = new ArrayList<>();
-		imglabel = new ArrayList<>();
+		text = new HashMap<>();
+		imglabel = new HashMap<>();
 		
 		Connection conn;
 		Statement stmt;
@@ -113,17 +114,14 @@ public class ProductManage extends JFrame{
 				int stock = rs.getInt(4);
 				Blob img = rs.getBlob(5);
 				
-				//제품 이름 레이블
 				JLabel name = new JLabel(pName);
 				name.setHorizontalAlignment(JLabel.CENTER);
 				list.add(name);
 				
-				//제품 이미지 레이블
 				JLabel image = new JLabel(loadImg(img));
 				list.add(image);
-				imglabel.add(image);
+				imglabel.put(key, image);
 				
-				//이미지 변경 버튼
 				JPanel btpanel = new JPanel();
 				btpanel.setLayout(new GridLayout(1, 1));
 				btpanel.setBorder(new EmptyBorder(50, 0, 50, 0));
@@ -136,6 +134,8 @@ public class ProductManage extends JFrame{
 						
 						if (r == JFileChooser.APPROVE_OPTION) {
 							try {
+								Connection conn2 = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
+								
 								File file = new File(j.getSelectedFile().getAbsolutePath());
 								InputStream is = new FileInputStream(file);
 								FileInputStream fis = new FileInputStream(file);
@@ -146,14 +146,14 @@ public class ProductManage extends JFrame{
 								imglabel.get(key-1).setIcon(loadImg(blob));
 								
 								String updateQ = "update products set img = (?) where pId = " + key;
-								PreparedStatement stmt2 = conn.prepareStatement(updateQ);
+								PreparedStatement stmt2 = conn2.prepareStatement(updateQ);
 
 								stmt2.setBinaryStream(1, fis, file.length());
 								stmt2.executeUpdate();
 	                            
 								JOptionPane.showMessageDialog(ProductManage.this, "이미지가 변경되었습니다.");
 
-								stmt2.close(); fis.close();
+								stmt2.close(); conn2.close(); fis.close();
 							} catch (Exception e) {
 								e.printStackTrace();
 							}
@@ -163,28 +163,25 @@ public class ProductManage extends JFrame{
 				btpanel.add(change);
 				list.add(btpanel);
 				
-				//가격 표시 레이블
 				JLabel pr = new JLabel(Integer.toString(price));
 				pr.setHorizontalAlignment(JLabel.CENTER);
 				list.add(pr);
 				
-				//제품 재고 변경 시 수량 입력 텍스트필드
 				JPanel s = new JPanel();
 				s.setLayout(new GridLayout(1, 1));
 				s.setBorder(new EmptyBorder(20, 0, 20, 0));
 				JTextField st = new JTextField(Integer.toString(stock));
 				st.setHorizontalAlignment(JTextField.CENTER);
 				st.setBorder(new LineBorder(Color.black));
-				text.add(st);
+				text.put(key, st);
 				
-				//텍스트 필드에 숫자와 백스페이스만 입력 가능하게 설정
-				text.get(key-1).addKeyListener(new KeyAdapter() {
+				text.get(key).addKeyListener(new KeyAdapter() {
 					public void keyPressed(KeyEvent ke) {						
 						if ((ke.getKeyChar() >= '0' && ke.getKeyChar() <= '9') || ke.getKeyChar() == 8)
-							text.get(key-1).setEditable(true);
+							text.get(key).setEditable(true);
 						else {
-							text.get(key-1).setEditable(false);
-							text.get(key-1).setBackground(Color.white);
+							text.get(key).setEditable(false);
+							text.get(key).setBackground(Color.white);
 						}
 					}
 				});
@@ -192,24 +189,24 @@ public class ProductManage extends JFrame{
 				s.add(st);
 				list.add(s);
 				
-				//제품 재고 변경 버튼과 삭제 버튼
 				JPanel bt = new JPanel();
 				bt.setBorder(new EmptyBorder(10, 0, 10, 0));
 				bt.setLayout(new GridLayout(0, 1, 10, 10));
 				JButton stockChange = new JButton("재고 수정");
-				JButton deleteProduct = new JButton("제품 삭제");
+				JButton deleteProduct = new JButton("상품 삭제");
 				
 				stockChange.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						try {
-							Statement stmt2 = conn.createStatement();
+							Connection conn2 = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
+							Statement stmt2 = conn2.createStatement();
 							String update = "update products set cnt = " + text.get(key-1).getText() + " where pId = " + key;
 														
 							stmt2.executeUpdate(update);
 
 							JOptionPane.showMessageDialog(ProductManage.this, "수량이 변경되었습니다.");
 
-							stmt2.close();
+							stmt2.close(); conn2.close();
 							
 						} catch (Exception a) {
 							a.printStackTrace();
@@ -217,21 +214,21 @@ public class ProductManage extends JFrame{
 					}
 				});
 				
-				//제품 삭제 시 패널 revalid 후 repaint로 삭제된 정보 반영
 				deleteProduct.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent a) {
 						try {
-							Statement stmt2 = conn.createStatement();
+							System.out.println(key);
+							Connection conn2 = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
+							Statement stmt2 = conn2.createStatement();
 							String delete = "delete from products where pId = " + key;
 							
 							stmt2.executeUpdate(delete);
                             JOptionPane.showMessageDialog(ProductManage.this, "제품이 삭제되었습니다.");
 
-							stmt2.close();
+							stmt2.close(); conn2.close();
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
-						
 						panel.remove(scroll);
 						JPanel refresh = cartList();
 						scroll = new JScrollPane(refresh, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
@@ -247,8 +244,10 @@ public class ProductManage extends JFrame{
 				list.add(bt);
 				
 				center.add(list);
+				
+				
 			}
-			
+			rs.close(); stmt.close(); conn.close();
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

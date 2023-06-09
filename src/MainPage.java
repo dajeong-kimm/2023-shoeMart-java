@@ -147,11 +147,11 @@ public class MainPage extends JFrame {
 
 		JButton myPageButton = new JButton("마이페이지");
 		JButton cartButton = new JButton("장바구니");
-		JButton checkoutButton = new JButton("결제하기");
+		
 
 		bottomPanel.add(myPageButton);
 		bottomPanel.add(cartButton);
-		bottomPanel.add(checkoutButton);
+		
 
 		panel.add(bottomPanel, BorderLayout.SOUTH);
 
@@ -175,13 +175,6 @@ public class MainPage extends JFrame {
 			}
 		});
 
-		// 결제하기 버튼 이벤트 리스너
-		checkoutButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				dispose(); // 현재 페이지(MainPage) 종료
-				PayPage payPage = new PayPage(user, cartItems); // PayPage 클래스로 이동
-			}
-		});
 
 	}
 

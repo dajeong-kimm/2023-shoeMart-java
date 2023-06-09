@@ -33,49 +33,44 @@ public class ProductRegisterPage extends JFrame{
 		panel.setLayout(new GridLayout(5, 1));
 		panel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		
-		//제품명 입력 필드
 		JPanel namePanel = new JPanel();
 		namePanel.setLayout(new GridLayout(1, 2));
 		namePanel.setBorder(new EmptyBorder(inset));
-		JLabel nameLabel = new JLabel("Product Name: ");
+		JLabel nameLabel = new JLabel("제품명: ");
 		nameField = new JTextField();
 		namePanel.add(nameLabel);
 		namePanel.add(nameField);
 		
-		//제품 가격 입력 필드
 		JPanel pricePanel = new JPanel();
 		pricePanel.setLayout(new GridLayout(1, 2));
 		pricePanel.setBorder(new EmptyBorder(inset));
-		JLabel priceLabel = new JLabel("Product Price: ");
+		JLabel priceLabel = new JLabel("가격: ");
 		priceField = new JTextField();
 		pricePanel.add(priceLabel);
 		pricePanel.add(priceField);
 		
-		//제품 재고 입력 필드
 		JPanel cntPanel = new JPanel();
 		cntPanel.setLayout(new GridLayout(1, 2));
 		cntPanel.setBorder(new EmptyBorder(inset));
-		JLabel cntLabel = new JLabel("Product Stock: ");
+		JLabel cntLabel = new JLabel("재고: ");
 		cntField = new JTextField();
 		cntPanel.add(cntLabel);
 		cntPanel.add(cntField);
 		
-		//제품 이미지 로드 필드
 		JPanel imgPanel = new JPanel();
 		imgPanel.setLayout(new GridLayout(1, 3));
 		imgPanel.setBorder(new EmptyBorder(inset));
-		JLabel imgLabel = new JLabel("Product Image: ");
+		JLabel imgLabel = new JLabel("제품 이미지: ");
 		imgNameLabel = new JLabel();
-		JButton imgButton = new JButton("Image select");
+		JButton imgButton = new JButton("이미지 선택");
 		imgButton.setActionCommand("Load");
 		imgButton.addActionListener(new ButtonClickListener());
 		imgPanel.add(imgLabel);
 		imgPanel.add(imgNameLabel);
 		imgPanel.add(imgButton);
 		
-		//등록하기 버튼
 		JPanel bottomPanel = new JPanel();
-		JButton register = new JButton("Register");
+		JButton register = new JButton("등록");
 		register.setSize(10, 5);
 		register.setActionCommand("Register");
 		register.addActionListener(new ButtonClickListener());
@@ -96,7 +91,6 @@ public class ProductRegisterPage extends JFrame{
 	
 	class ButtonClickListener implements ActionListener {
 		
-		//이미지 로드 메소드
 		private void loadImage() {
 			JFileChooser j = new JFileChooser();
 			int r = j.showOpenDialog(null);
@@ -117,7 +111,6 @@ public class ProductRegisterPage extends JFrame{
 			}
 		}
 		
-		//텍스트필드 입력값이 정수인지 확인
 		public boolean isInteger(String s) {
 			for (int i = 0; i < s.length(); i++) {
 				if (!Character.isDigit(s.charAt(i)))
@@ -135,8 +128,7 @@ public class ProductRegisterPage extends JFrame{
 				String p = priceField.getText();
 				String c = cntField.getText();
 				
-				
-				if (!isInteger(p) || !isInteger(c)) { // 가격과 재고 중 입력값이 정수가 아닌 필드가 있는 경우
+				if (!isInteger(p) || !isInteger(c)) {
 
 					SwingUtilities.invokeLater(() -> {
 						JOptionPane.showMessageDialog(null, "정수를 입력해주세요.", "입력 오류", JOptionPane.ERROR_MESSAGE);
@@ -165,9 +157,8 @@ public class ProductRegisterPage extends JFrame{
 						psmt.setBinaryStream(4, fis, imgSize);
 
 						int change = psmt.executeUpdate();
-						
-						
-						if (change > 0) { // insert 성공 시
+
+						if (change > 0) {
 							SwingUtilities.invokeLater(() -> {
 								JOptionPane.showMessageDialog(null, "상품을 추가했습니다.", "상품 추가",
 										JOptionPane.INFORMATION_MESSAGE);
@@ -175,7 +166,7 @@ public class ProductRegisterPage extends JFrame{
 							});
 							dispose();
 							ProductRegisterPage newPage = new ProductRegisterPage();
-						} else { // 데이터베이스의 변동사항이 없는 경우
+						} else {
 							SwingUtilities.invokeLater(() -> {
 								JOptionPane.showMessageDialog(null, "상품이 추가되지 않았습니다.", "상품 추가 실패",
 										JOptionPane.ERROR_MESSAGE);

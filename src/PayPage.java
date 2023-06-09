@@ -17,7 +17,7 @@ public class PayPage extends JFrame {
 
     private static final String DB_URL = "jdbc:mysql://127.0.0.1:3306/shoe_martt";
     private static final String DB_USERNAME = "root";
-    private static final String DB_PASSWORD = "*Bestceo7";
+    private static final String DB_PASSWORD = "haeun";
 
     public PayPage(User user, List<CartItem> cartItems) {
         this.user = user;
@@ -93,35 +93,12 @@ public class PayPage extends JFrame {
 
         totalPanel.add(totalPriceLabel);
         
-        // 버튼s
+        // 결제버튼
         JPanel paymentPanel = new JPanel();
         paymentPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
         JButton payButton = new JButton("결제하기");
         JButton backButton = new JButton("상품 페이지로 돌아가기");
         
-        
-        //결제버튼
-        payButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-            	String paypwdInput = JOptionPane.showInputDialog(PayPage.this, "결제 비밀번호를 입력하세요.");
-                      if (paypwdInput.equals(user.getPaypwd())) {
-                            if(totalPrice<=user.getPoint()) {
-                    	  	user.reducePoint(user, totalPrice);
-//                             pointValueLabel.setText(Integer.toString(user.getPoint()));
-                             performPayment();
-                         }
-                            else {
-                            	JOptionPane.showMessageDialog(PayPage.this, "포인트가 부족하여 결제가 되지 않습니다");
-                            }}
-                      else {
-                             JOptionPane.showMessageDialog(PayPage.this, "결제 비밀번호가 일치하지 않습니다.");
-                         }
-            	}
-            	
-          
-        });
-        
-        //돌아가기 버튼
         backButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 dispose(); // 현재 페이지 종료
@@ -129,6 +106,23 @@ public class PayPage extends JFrame {
                 mainPage.setVisible(true);
             }
         });
+        payButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	String paypwdInput = JOptionPane.showInputDialog(PayPage.this, "결제 비밀번호를 입력하세요.");
+                      if (paypwdInput.equals(user.getPaypwd())) {
+                             user.reducePoint(user, totalPrice);
+//                             pointValueLabel.setText(Integer.toString(user.getPoint()));
+                             performPayment();
+                         } 
+                      else {
+                             JOptionPane.showMessageDialog(PayPage.this, "결제 비밀번호가 일치하지 않습니다.");
+                         }
+            	
+            	
+            };
+        });
+        
+        
         
         paymentPanel.add(payButton);
         paymentPanel.add(backButton);

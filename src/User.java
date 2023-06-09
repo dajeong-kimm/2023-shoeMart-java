@@ -4,9 +4,9 @@ import java.io.FileInputStream;
 
 
 public class User {
-	private static final String DB_URL = "jdbc:mysql://127.0.0.1:3306/shoe_martt";
-    private static final String DB_USERNAME = "root";
-    private static final String DB_PASSWORD = "haeun";
+	private static final String DB_URL = "jdbc:mysql://localhost:3306/shoe_mart";
+    private static final String DB_USERNAME = "dajeong";
+    private static final String DB_PASSWORD = "6545";
     
     // 이미지 파일이 위치한 절대경로
     private static final String IMG_PATH = "src/";
@@ -205,7 +205,7 @@ public class User {
     // 포인트 삭감 메소드 
     public void reducePoint(User user, int amount) {
         try (Connection conn = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
-             PreparedStatement stmt = conn.prepareStatement("UPDATE users SET point = point + ? WHERE id = ?")) {
+             PreparedStatement stmt = conn.prepareStatement("UPDATE users SET point = point - ? WHERE id = ?")) {
 
             // 이전 포인트 값 가져오기
             int currentPoint = user.getPoint();

@@ -81,7 +81,7 @@ public class MyPage extends JFrame {
         JButton contactAdminButton = new JButton("관리자에게 문의하기");
         
      // 버튼 폰트 설정
-        Font buttonFont = new Font("Arial", Font.PLAIN, 20);
+        Font buttonFont = new Font(Font.DIALOG, Font.PLAIN, 20);
         backButton.setFont(buttonFont);
         chargeButton.setFont(buttonFont);
         logoutButton.setFont(buttonFont);

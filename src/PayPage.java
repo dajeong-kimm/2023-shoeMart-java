@@ -15,9 +15,9 @@ public class PayPage extends JFrame {
     private List<CartItem> cartItems = new ArrayList();
     private int totalPrice;
 
-    private static final String DB_URL = "jdbc:mysql://127.0.0.1:3306/shoe_martt";
-    private static final String DB_USERNAME = "root";
-    private static final String DB_PASSWORD = "haeun";
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/shoe_mart";
+    private static final String DB_USERNAME = "dajeong";
+    private static final String DB_PASSWORD = "6545";
 
     public PayPage(User user, List<CartItem> cartItems) {
         this.user = user;
@@ -93,12 +93,37 @@ public class PayPage extends JFrame {
 
         totalPanel.add(totalPriceLabel);
         
-        // 결제버튼
+        // 버튼s
         JPanel paymentPanel = new JPanel();
         paymentPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
         JButton payButton = new JButton("결제하기");
         JButton backButton = new JButton("상품 페이지로 돌아가기");
         
+        
+     // 결제버튼
+        payButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String paypwdInput = JOptionPane.showInputDialog(PayPage.this, "결제 비밀번호를 입력하세요.");
+                if (paypwdInput.equals(user.getPaypwd())) {
+                    boolean canProceed = checkInventory();
+
+                    if (canProceed) {
+                        if (totalPrice <= user.getPoint()) {
+                            user.reducePoint(user, totalPrice);
+                            performPayment();
+                        } else {
+                            JOptionPane.showMessageDialog(PayPage.this, "포인트가 부족하여 결제가 되지 않습니다.");
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(PayPage.this, "상품의 재고가 부족하여 결제할 수 없습니다.");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(PayPage.this, "결제 비밀번호가 일치하지 않습니다.");
+                }
+            }
+        });
+        
+        //돌아가기 버튼
         backButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 dispose(); // 현재 페이지 종료
@@ -106,23 +131,6 @@ public class PayPage extends JFrame {
                 mainPage.setVisible(true);
             }
         });
-        payButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-            	String paypwdInput = JOptionPane.showInputDialog(PayPage.this, "결제 비밀번호를 입력하세요.");
-                      if (paypwdInput.equals(user.getPaypwd())) {
-                             user.reducePoint(user, totalPrice);
-//                             pointValueLabel.setText(Integer.toString(user.getPoint()));
-                             performPayment();
-                         } 
-                      else {
-                             JOptionPane.showMessageDialog(PayPage.this, "결제 비밀번호가 일치하지 않습니다.");
-                         }
-            	
-            	
-            };
-        });
-        
-        
         
         paymentPanel.add(payButton);
         paymentPanel.add(backButton);
@@ -133,6 +141,40 @@ public class PayPage extends JFrame {
 
         add(panel);
         setVisible(true);
+    }
+ // 재고 확인 메서드
+    private boolean checkInventory() {
+        boolean canProceed = true;
+
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection conn = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
+            Statement stmt = conn.createStatement();
+
+            for (CartItem item : cartItems) {
+                int pId = item.getPId();
+                int quantity = item.getQuantity();
+
+                // Check if inventory is greater than 0
+                String inventoryCheckSql = "SELECT cnt FROM products WHERE pId=" + pId;
+                ResultSet inventoryCheckRs = stmt.executeQuery(inventoryCheckSql);
+                inventoryCheckRs.next();
+                int inventory = inventoryCheckRs.getInt("cnt");
+                inventoryCheckRs.close();
+
+                if (inventory <= 0 || inventory < quantity) {
+                    canProceed = false;
+                    break; 
+                }
+            }
+
+            stmt.close();
+            conn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return canProceed;
     }
 
     

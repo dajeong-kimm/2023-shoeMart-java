@@ -88,10 +88,7 @@ public class MainPage extends JFrame {
 				
 				text.get(key-1).setHorizontalAlignment(JTextField.CENTER);
 				text.get(key-1).addKeyListener(new KeyAdapter() {
-					public void keyPressed(KeyEvent ke) {
-						String value = text.get(key-1).getText();
-						
-						int l = value.length();
+					public void keyPressed(KeyEvent ke) {						
 						if ((ke.getKeyChar() >= '0' && ke.getKeyChar() <= '9') || ke.getKeyChar() == 8) {
 							text.get(key-1).setEditable(true);
 						} else {

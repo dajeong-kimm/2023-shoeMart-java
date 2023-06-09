@@ -36,19 +36,19 @@ public class LoginRegisterPage extends JFrame implements ActionListener {
 		inputPanel.setLayout(new GridLayout(2, 2));
 
 		JLabel idLabel = new JLabel("ID:");
-		idLabel.setFont(new Font("Arial", Font.PLAIN, 30));
+		idLabel.setFont(new Font(Font.DIALOG, Font.PLAIN, 30));
 		inputPanel.add(idLabel);
 
 		idField = new JTextField();
-		idField.setFont(new Font("Arial", Font.PLAIN, 30));
+		idField.setFont(new Font(Font.DIALOG, Font.PLAIN, 30));
 		inputPanel.add(idField);
 
 		JLabel pwdLabel = new JLabel("Password:");
-		pwdLabel.setFont(new Font("Arial", Font.PLAIN, 30));
+		pwdLabel.setFont(new Font(Font.DIALOG, Font.PLAIN, 30));
 		inputPanel.add(pwdLabel);
 
 		passwordField = new JPasswordField();
-		passwordField.setFont(new Font("Arial", Font.PLAIN, 30));
+		passwordField.setFont(new Font(Font.DIALOG, Font.PLAIN, 30));
 		inputPanel.add(passwordField);
 
 		centerPanel.add(inputPanel);
@@ -57,12 +57,12 @@ public class LoginRegisterPage extends JFrame implements ActionListener {
 		buttonPanel.setLayout(new FlowLayout());
 
 		loginButton = new JButton("Login");
-		loginButton.setFont(new Font("Arial", Font.BOLD, 30));
+		loginButton.setFont(new Font(Font.DIALOG, Font.BOLD, 30));
 		loginButton.addActionListener(this);
 		buttonPanel.add(loginButton);
 
 		registerButton = new JButton("Register");
-		registerButton.setFont(new Font("Arial", Font.BOLD, 30));
+		registerButton.setFont(new Font(Font.DIALOG, Font.BOLD, 30));
 		registerButton.addActionListener(this);
 		buttonPanel.add(registerButton);
 
@@ -140,47 +140,47 @@ class RegisterPage extends JFrame implements ActionListener {
 		centerPanel.setLayout(new GridLayout(4, 2));
 
 		JLabel nameLabel = new JLabel("Name:");
-		nameLabel.setFont(new Font("Arial", Font.PLAIN, 30));
+		nameLabel.setFont(new Font(Font.DIALOG, Font.PLAIN, 30));
 		centerPanel.add(nameLabel);
 
 		nameField = new JTextField();
-		nameField.setFont(new Font("Arial", Font.PLAIN, 30));
+		nameField.setFont(new Font(Font.DIALOG, Font.PLAIN, 30));
 		centerPanel.add(nameField);
 
 		JLabel idLabel = new JLabel("ID:");
-		idLabel.setFont(new Font("Arial", Font.PLAIN, 30));
+		idLabel.setFont(new Font(Font.DIALOG, Font.PLAIN, 30));
 		centerPanel.add(idLabel);
 
 		idField = new JTextField();
-		idField.setFont(new Font("Arial", Font.PLAIN, 30));
+		idField.setFont(new Font(Font.DIALOG, Font.PLAIN, 30));
 		centerPanel.add(idField);
 
 		JLabel pwdLabel = new JLabel("Password:");
-		pwdLabel.setFont(new Font("Arial", Font.PLAIN, 30));
+		pwdLabel.setFont(new Font(Font.DIALOG, Font.PLAIN, 30));
 		centerPanel.add(pwdLabel);
 
 		passwordField = new JPasswordField();
-		passwordField.setFont(new Font("Arial", Font.PLAIN, 30));
+		passwordField.setFont(new Font(Font.DIALOG, Font.PLAIN, 30));
 		centerPanel.add(passwordField);
 
 		JLabel paypwdLabel = new JLabel("Pay Password:");
-		paypwdLabel.setFont(new Font("Arial", Font.PLAIN, 30));
+		paypwdLabel.setFont(new Font(Font.DIALOG, Font.PLAIN, 30));
 		centerPanel.add(paypwdLabel);
 
 		paypwdField = new JPasswordField();
-		paypwdField.setFont(new Font("Arial", Font.PLAIN, 30));
+		paypwdField.setFont(new Font(Font.DIALOG, Font.PLAIN, 30));
 		centerPanel.add(paypwdField);
 
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setLayout(new FlowLayout());
 
 		registerButton = new JButton("Register");
-		registerButton.setFont(new Font("Arial", Font.BOLD, 30));
+		registerButton.setFont(new Font(Font.DIALOG, Font.BOLD, 30));
 		registerButton.addActionListener(this);
 		buttonPanel.add(registerButton);
 
 		backButton = new JButton("Back");
-		backButton.setFont(new Font("Arial", Font.BOLD, 30));
+		backButton.setFont(new Font(Font.DIALOG, Font.BOLD, 30));
 		backButton.addActionListener(this);
 		buttonPanel.add(backButton);
 

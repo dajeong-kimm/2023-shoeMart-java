@@ -200,7 +200,7 @@ public class ProductManage extends JFrame{
 						try {
 							Connection conn2 = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
 							Statement stmt2 = conn2.createStatement();
-							String update = "update products set cnt = " + text.get(key-1).getText() + " where pId = " + key;
+							String update = "update products set cnt = " + text.get(key).getText() + " where pId = " + key;
 														
 							stmt2.executeUpdate(update);
 

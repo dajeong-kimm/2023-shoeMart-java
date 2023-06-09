@@ -35,7 +35,7 @@ public class AdministratorPage extends JFrame {
         centerPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
         
        
-        JButton chatButton = new JButton("관리자에게 문의");
+        JButton chatButton = new JButton("구매자에게 문의 답변");
         JButton addProductButton = new JButton("상품 관리");
         JButton backButton = new JButton("이전으로 돌아가기");
 

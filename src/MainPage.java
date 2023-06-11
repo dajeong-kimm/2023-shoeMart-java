@@ -30,7 +30,7 @@ public class MainPage extends JFrame {
 		setResizable(false);
 		setLocationRelativeTo(null);
 		
-		ArrayList<JTextField> text = new ArrayList<>();
+		HashMap<Integer, JTextField> text = new HashMap<>();
 
 		JPanel panel = new JPanel();
 		panel.setLayout(new BorderLayout());
@@ -84,16 +84,16 @@ public class MainPage extends JFrame {
 				JButton sub = new JButton("<");
 				amtField = new JTextField("1");
 				
-				text.add(amtField);
+				text.put(key, amtField);
 				
-				text.get(key-1).setHorizontalAlignment(JTextField.CENTER);
-				text.get(key-1).addKeyListener(new KeyAdapter() {
+				text.get(key).setHorizontalAlignment(JTextField.CENTER);
+				text.get(key).addKeyListener(new KeyAdapter() {
 					public void keyPressed(KeyEvent ke) {						
 						if ((ke.getKeyChar() >= '0' && ke.getKeyChar() <= '9') || ke.getKeyChar() == 8) {
-							text.get(key-1).setEditable(true);
+							text.get(key).setEditable(true);
 						} else {
-							text.get(key-1).setEditable(false);
-							text.get(key-1).setBackground(Color.white);
+							text.get(key).setEditable(false);
+							text.get(key).setBackground(Color.white);
 						}
 					}
 				});
@@ -101,31 +101,31 @@ public class MainPage extends JFrame {
 				
 				sub.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						int num = Integer.parseInt(text.get(key-1).getText());
+						int num = Integer.parseInt(text.get(key).getText());
 						
 						if (num > 0)
-							text.get(key-1).setText(Integer.toString(num-1));
+							text.get(key).setText(Integer.toString(num-1));
 					}
 				});
 				
 				add.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						int num = Integer.parseInt(text.get(key-1).getText());
+						int num = Integer.parseInt(text.get(key).getText());
 						
-						text.get(key-1).setText(Integer.toString(num+1));
+						text.get(key).setText(Integer.toString(num+1));
 					}
 				});
 				
 				addCart.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						addToCart(key.intValue(), Integer.parseInt(text.get(key-1).getText()));
-						text.get(key-1).setText("1");
+						addToCart(key.intValue(), Integer.parseInt(text.get(key).getText()));
+						text.get(key).setText("1");
 					}
 				});
 
 				
 				amtDecisionPanel.add(sub);
-				amtDecisionPanel.add(text.get(key-1));
+				amtDecisionPanel.add(text.get(key));
 				amtDecisionPanel.add(add);
 				amtDecisionPanel.setBorder(new EmptyBorder(inset));
 				productPanel.add(productImageLabel);

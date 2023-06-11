@@ -59,6 +59,7 @@ public class ProductManage extends JFrame{
 		
 		manage.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				dispose();
 				ProductRegisterPage prp = new ProductRegisterPage();
 			}
 		});

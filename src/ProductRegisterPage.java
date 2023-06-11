@@ -165,13 +165,14 @@ public class ProductRegisterPage extends JFrame{
 
 							});
 							dispose();
-							ProductRegisterPage newPage = new ProductRegisterPage();
+							ProductManage newPage = new ProductManage();
 						} else {
 							SwingUtilities.invokeLater(() -> {
 								JOptionPane.showMessageDialog(null, "상품이 추가되지 않았습니다.", "상품 추가 실패",
 										JOptionPane.ERROR_MESSAGE);
 							});
-
+							dispose();
+							ProductManage newPage = new ProductManage();
 						}
 
 						fis.close();
